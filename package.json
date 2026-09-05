@@ -1,0 +1,125 @@
+{
+  "name": "easygit",
+  "displayName": "easyGit",
+  "description": "Simplified Git workflow for VS Code — one-click commit, branch switching, and more.",
+  "version": "0.1.0",
+  "publisher": "easygit",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["SCM Providers"],
+  "keywords": ["git", "scm", "commit", "branch", "simplified"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "easygit.quickCommit",
+        "title": "easyGit: Quick Commit"
+      },
+      {
+        "command": "easygit.quickCommitAll",
+        "title": "easyGit: Stage All & Commit"
+      },
+      {
+        "command": "easygit.branchSwitch",
+        "title": "easyGit: Switch Branch"
+      },
+      {
+        "command": "easygit.createBranch",
+        "title": "easyGit: Create Branch"
+      },
+      {
+        "command": "easygit.quickPush",
+        "title": "easyGit: Push"
+      },
+      {
+        "command": "easygit.quickPull",
+        "title": "easyGit: Pull"
+      },
+      {
+        "command": "easygit.undoLastCommit",
+        "title": "easyGit: Undo Last Commit (Soft Reset)"
+      },
+      {
+        "command": "easygit.stashChanges",
+        "title": "easyGit: Stash Changes"
+      },
+      {
+        "command": "easygit.popStash",
+        "title": "easyGit: Pop Stash"
+      },
+      {
+        "command": "easygit.refreshSidebar",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "easygit-sidebar",
+          "title": "easyGit",
+          "icon": "$(source-control)"
+        }
+      ]
+    },
+    "views": {
+      "easygit-sidebar": [
+        {
+          "id": "easygit-status",
+          "name": "Changes",
+          "type": "tree"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        { "command": "easygit.quickCommit", "when": "scmProvider == git" },
+        { "command": "easygit.quickCommitAll", "when": "scmProvider == git" },
+        { "command": "easygit.branchSwitch", "when": "scmProvider == git" },
+        { "command": "easygit.createBranch", "when": "scmProvider == git" },
+        { "command": "easygit.quickPush", "when": "scmProvider == git" },
+        { "command": "easygit.quickPull", "when": "scmProvider == git" },
+        { "command": "easygit.undoLastCommit", "when": "scmProvider == git" },
+        { "command": "easygit.stashChanges", "when": "scmProvider == git" },
+        { "command": "easygit.popStash", "when": "scmProvider == git" }
+      ],
+      "view/title": [
+        { "command": "easygit.refreshSidebar", "when": "view == easygit-status", "group": "navigation" }
+      ]
+    },
+    "configuration": {
+      "title": "easyGit",
+      "properties": {
+        "easygit.autoFetch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically fetch on startup."
+        },
+        "easygit.defaultCommitPrefix": {
+          "type": "string",
+          "default": "",
+          "description": "Optional prefix for commit messages (e.g. 'feat:')."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.config.mjs --production",
+    "watch": "node esbuild.config.mjs --watch",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "esbuild": "^0.21.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.5.0",
+    "@vscode/vsce": "^2.27.0"
+  },
+  "dependencies": {}
+}
