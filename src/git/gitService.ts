@@ -29,7 +29,7 @@ class GitService {
   private outputChannel: vscode.OutputChannel;
 
   constructor() {
-    this.outputChannel = vscode.window.createOutputChannel("easyGit");
+    this.outputChannel = vscode.window.createOutputChannel("OneGit");
   }
 
   private async execGit(args: string, cwd?: string): Promise<string> {
@@ -73,7 +73,7 @@ class GitService {
     const branch = await this.getCurrentBranch();
     const statusOutput = await this.execGit("status --porcelain=v1");
     const aheadBehind = await this.execGit(
-      "rev-list --left-right --count HEAD...@{upstream}"
+      "rev-list --left-right --count HEAD...@{upstream}",
     ).catch(() => "0\t0");
 
     const [ahead, behind] = aheadBehind.split("\t").map(Number);
@@ -169,10 +169,13 @@ class GitService {
 
   async getBranches(): Promise<BranchInfo[]> {
     const output = await this.execGit("branch");
-    return output.split("\n").filter(Boolean).map((line) => ({
-      name: line.replace(/^\*?\s+/, "").trim(),
-      isCurrent: line.startsWith("*"),
-    }));
+    return output
+      .split("\n")
+      .filter(Boolean)
+      .map((line) => ({
+        name: line.replace(/^\*?\s+/, "").trim(),
+        isCurrent: line.startsWith("*"),
+      }));
   }
 
   async switchBranch(branch: string): Promise<void> {
@@ -205,7 +208,9 @@ class GitService {
     await this.execGit("stash pop");
   }
 
-  async getLog(count: number = 10): Promise<{ hash: string; message: string; date: string }[]> {
+  async getLog(
+    count: number = 10,
+  ): Promise<{ hash: string; message: string; date: string }[]> {
     if (!(await this.hasCommits())) {
       return [];
     }

@@ -3,38 +3,42 @@ import { git } from "../git/gitService";
 
 export function registerPushPullCommands(context: vscode.ExtensionContext) {
   context.subscriptions.push(
-    vscode.commands.registerCommand("easygit.quickPush", async () => {
+    vscode.commands.registerCommand("onegit.quickPush", async () => {
       try {
         vscode.window.withProgress(
           {
             location: vscode.ProgressLocation.Notification,
-            title: "easyGit: Pushing...",
+            title: "OneGit: Pushing...",
           },
           async () => {
             await git.push();
-            vscode.window.showInformationMessage("easyGit: Push complete.");
-          }
+            vscode.window.showInformationMessage("OneGit: Push complete.");
+          },
         );
       } catch (error: any) {
-        vscode.window.showErrorMessage(`easyGit: Push failed — ${error.message}`);
+        vscode.window.showErrorMessage(
+          `OneGit: Push failed — ${error.message}`,
+        );
       }
     }),
 
-    vscode.commands.registerCommand("easygit.quickPull", async () => {
+    vscode.commands.registerCommand("onegit.quickPull", async () => {
       try {
         vscode.window.withProgress(
           {
             location: vscode.ProgressLocation.Notification,
-            title: "easyGit: Pulling...",
+            title: "OneGit: Pulling...",
           },
           async () => {
             await git.pull();
-            vscode.window.showInformationMessage("easyGit: Pull complete.");
-          }
+            vscode.window.showInformationMessage("OneGit: Pull complete.");
+          },
         );
       } catch (error: any) {
-        vscode.window.showErrorMessage(`easyGit: Pull failed — ${error.message}`);
+        vscode.window.showErrorMessage(
+          `OneGit: Pull failed — ${error.message}`,
+        );
       }
-    })
+    }),
   );
 }

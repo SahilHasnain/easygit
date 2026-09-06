@@ -3,11 +3,10 @@ import { git, FileChange, GitStatus } from "../git/gitService";
 
 type TreeItem = StatusTreeItem;
 
-export class StatusTreeDataProvider
-  implements vscode.TreeDataProvider<TreeItem>
-{
-  private _onDidChangeTreeData =
-    new vscode.EventEmitter<TreeItem | undefined | null | void>();
+export class StatusTreeDataProvider implements vscode.TreeDataProvider<TreeItem> {
+  private _onDidChangeTreeData = new vscode.EventEmitter<
+    TreeItem | undefined | null | void
+  >();
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
   refresh(): void {
@@ -39,13 +38,13 @@ export class StatusTreeDataProvider
     const pushPullText = buildPushPullText(status);
     if (pushPullText) {
       items.push(
-        new SidebarButton("Push / Pull", "easygit.quickPush", pushPullText)
+        new SidebarButton("Push / Pull", "onegit.quickPush", pushPullText),
       );
     }
 
     items.push(
-      new SidebarButton("Commit All", "easygit.quickCommitAll"),
-      new SidebarButton("Switch Branch", "easygit.branchSwitch")
+      new SidebarButton("Commit All", "onegit.quickCommitAll"),
+      new SidebarButton("Switch Branch", "onegit.branchSwitch"),
     );
 
     items.push(new StatusTreeItem("", "separator"));
@@ -74,8 +73,8 @@ export class StatusTreeDataProvider
     items.push(new StatusTreeItem("", "separator"));
 
     items.push(
-      new SidebarButton("Stash Changes", "easygit.stashChanges"),
-      new SidebarButton("Undo Last Commit", "easygit.undoLastCommit")
+      new SidebarButton("Stash Changes", "onegit.stashChanges"),
+      new SidebarButton("Undo Last Commit", "onegit.undoLastCommit"),
     );
 
     return items;
@@ -87,14 +86,11 @@ function createBranchItem(status: GitStatus): StatusTreeItem {
     status.ahead > 0 || status.behind > 0
       ? `  ↑${status.ahead} ↓${status.behind}`
       : "";
-  const item = new StatusTreeItem(
-    status.currentBranch,
-    "branch"
-  );
+  const item = new StatusTreeItem(status.currentBranch, "branch");
   item.iconPath = new vscode.ThemeIcon("git-branch");
   item.description = aheadBehind.trim() || "";
   item.command = {
-    command: "easygit.branchSwitch",
+    command: "onegit.branchSwitch",
     title: "Switch Branch",
   };
   item.tooltip = "Current branch. Click to switch.";
@@ -113,7 +109,7 @@ export class StatusTreeItem extends vscode.TreeItem {
 
   constructor(
     public readonly label: string,
-    public readonly fileType: string
+    public readonly fileType: string,
   ) {
     super(label);
     if (fileType === "header") {
@@ -160,12 +156,9 @@ function getButtonIcon(label: string): vscode.ThemeIcon {
 function createSection(
   title: string,
   files: FileChange[],
-  isStaged: boolean
+  isStaged: boolean,
 ): StatusTreeItem {
-  const section = new StatusTreeItem(
-    `${title} (${files.length})`,
-    "header"
-  );
+  const section = new StatusTreeItem(`${title} (${files.length})`, "header");
   section.children = files.map((file) => toTreeItem(file, isStaged));
   return section;
 }
@@ -186,14 +179,14 @@ function toTreeItem(file: FileChange, isStaged: boolean): StatusTreeItem {
   const commands: vscode.Command[] = isStaged
     ? [
         {
-          command: "easygit.unstageFile",
+          command: "onegit.unstageFile",
           title: "Unstage",
           arguments: [file.path],
         },
       ]
     : [
         {
-          command: "easygit.stageFile",
+          command: "onegit.stageFile",
           title: "Stage",
           arguments: [file.path],
         },
@@ -204,23 +197,29 @@ function toTreeItem(file: FileChange, isStaged: boolean): StatusTreeItem {
 }
 
 export function registerSidebar(
-  context: vscode.ExtensionContext
+  context: vscode.ExtensionContext,
 ): StatusTreeDataProvider {
   const provider = new StatusTreeDataProvider();
-  vscode.window.registerTreeDataProvider("easygit-status", provider);
+  vscode.window.registerTreeDataProvider("onegit-status", provider);
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("easygit.refreshSidebar", () =>
-      provider.refresh()
+    vscode.commands.registerCommand("onegit.refreshSidebar", () =>
+      provider.refresh(),
     ),
-    vscode.commands.registerCommand("easygit.stageFile", async (filePath: string) => {
-      await git.stageFile(filePath);
-      provider.refresh();
-    }),
-    vscode.commands.registerCommand("easygit.unstageFile", async (filePath: string) => {
-      await git.unstageFile(filePath);
-      provider.refresh();
-    })
+    vscode.commands.registerCommand(
+      "onegit.stageFile",
+      async (filePath: string) => {
+        await git.stageFile(filePath);
+        provider.refresh();
+      },
+    ),
+    vscode.commands.registerCommand(
+      "onegit.unstageFile",
+      async (filePath: string) => {
+        await git.unstageFile(filePath);
+        provider.refresh();
+      },
+    ),
   );
 
   return provider;
