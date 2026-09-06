@@ -1,56 +1,72 @@
 {
-  "name": "easygit",
-  "displayName": "easyGit",
-  "description": "Simplified Git workflow for VS Code — one-click commit, branch switching, and more.",
+  "name": "OneGit",
+  "displayName": "OneGit",
+  "description": "Simplified Git workflow for VS Code \u2014 one-click commit, branch switching, and more.",
   "version": "0.1.0",
-  "publisher": "easygit",
+  "publisher": "SahilHasnain",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SahilHasnain/onegit.git"
+  },
+  "license": "MIT",
   "engines": {
     "vscode": "^1.90.0"
   },
-  "categories": ["SCM Providers"],
-  "keywords": ["git", "scm", "commit", "branch", "simplified"],
-  "activationEvents": ["onStartupFinished"],
+  "categories": [
+    "SCM Providers"
+  ],
+  "keywords": [
+    "git",
+    "scm",
+    "commit",
+    "branch",
+    "simplified"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "easygit.quickCommit",
-        "title": "easyGit: Quick Commit"
+        "command": "onegit.quickCommit",
+        "title": "OneGit: Quick Commit"
       },
       {
-        "command": "easygit.quickCommitAll",
-        "title": "easyGit: Stage All & Commit"
+        "command": "onegit.quickCommitAll",
+        "title": "OneGit: Stage All & Commit"
       },
       {
-        "command": "easygit.branchSwitch",
-        "title": "easyGit: Switch Branch"
+        "command": "onegit.branchSwitch",
+        "title": "OneGit: Switch Branch"
       },
       {
-        "command": "easygit.createBranch",
-        "title": "easyGit: Create Branch"
+        "command": "onegit.createBranch",
+        "title": "OneGit: Create Branch"
       },
       {
-        "command": "easygit.quickPush",
-        "title": "easyGit: Push"
+        "command": "onegit.quickPush",
+        "title": "OneGit: Push"
       },
       {
-        "command": "easygit.quickPull",
-        "title": "easyGit: Pull"
+        "command": "onegit.quickPull",
+        "title": "OneGit: Pull"
       },
       {
-        "command": "easygit.undoLastCommit",
-        "title": "easyGit: Undo Last Commit (Soft Reset)"
+        "command": "onegit.undoLastCommit",
+        "title": "OneGit: Undo Last Commit (Soft Reset)"
       },
       {
-        "command": "easygit.stashChanges",
-        "title": "easyGit: Stash Changes"
+        "command": "onegit.stashChanges",
+        "title": "OneGit: Stash Changes"
       },
       {
-        "command": "easygit.popStash",
-        "title": "easyGit: Pop Stash"
+        "command": "onegit.popStash",
+        "title": "OneGit: Pop Stash"
       },
       {
-        "command": "easygit.refreshSidebar",
+        "command": "onegit.refreshSidebar",
         "title": "Refresh",
         "icon": "$(refresh)"
       }
@@ -58,16 +74,16 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "easygit-sidebar",
-          "title": "easyGit",
+          "id": "onegit-sidebar",
+          "title": "OneGit",
           "icon": "$(source-control)"
         }
       ]
     },
     "views": {
-      "easygit-sidebar": [
+      "onegit-sidebar": [
         {
-          "id": "easygit-status",
+          "id": "onegit-status",
           "name": "Changes",
           "type": "tree"
         }
@@ -75,29 +91,60 @@
     },
     "menus": {
       "commandPalette": [
-        { "command": "easygit.quickCommit", "when": "scmProvider == git" },
-        { "command": "easygit.quickCommitAll", "when": "scmProvider == git" },
-        { "command": "easygit.branchSwitch", "when": "scmProvider == git" },
-        { "command": "easygit.createBranch", "when": "scmProvider == git" },
-        { "command": "easygit.quickPush", "when": "scmProvider == git" },
-        { "command": "easygit.quickPull", "when": "scmProvider == git" },
-        { "command": "easygit.undoLastCommit", "when": "scmProvider == git" },
-        { "command": "easygit.stashChanges", "when": "scmProvider == git" },
-        { "command": "easygit.popStash", "when": "scmProvider == git" }
+        {
+          "command": "onegit.quickCommit",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.quickCommitAll",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.branchSwitch",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.createBranch",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.quickPush",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.quickPull",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.undoLastCommit",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.stashChanges",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "onegit.popStash",
+          "when": "scmProvider == git"
+        }
       ],
       "view/title": [
-        { "command": "easygit.refreshSidebar", "when": "view == easygit-status", "group": "navigation" }
+        {
+          "command": "onegit.refreshSidebar",
+          "when": "view == onegit-status",
+          "group": "navigation"
+        }
       ]
     },
     "configuration": {
-      "title": "easyGit",
+      "title": "OneGit",
       "properties": {
-        "easygit.autoFetch": {
+        "onegit.autoFetch": {
           "type": "boolean",
           "default": true,
           "description": "Automatically fetch on startup."
         },
-        "easygit.defaultCommitPrefix": {
+        "onegit.defaultCommitPrefix": {
           "type": "string",
           "default": "",
           "description": "Optional prefix for commit messages (e.g. 'feat:')."
@@ -121,5 +168,8 @@
     "typescript": "^5.5.0",
     "@vscode/vsce": "^2.27.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2"
+  }
 }

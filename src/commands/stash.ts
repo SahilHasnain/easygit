@@ -3,7 +3,7 @@ import { git } from "../git/gitService";
 
 export function registerStashCommands(context: vscode.ExtensionContext) {
   context.subscriptions.push(
-    vscode.commands.registerCommand("easygit.stashChanges", async () => {
+    vscode.commands.registerCommand("onegit.stashChanges", async () => {
       const message = await vscode.window.showInputBox({
         prompt: "Stash message (optional)",
         placeHolder: "WIP: my changes",
@@ -15,25 +15,25 @@ export function registerStashCommands(context: vscode.ExtensionContext) {
 
       try {
         await git.stash(message || undefined);
-        vscode.window.showInformationMessage("easyGit: Changes stashed.");
-        vscode.commands.executeCommand("easygit.refreshSidebar");
+        vscode.window.showInformationMessage("OneGit: Changes stashed.");
+        vscode.commands.executeCommand("onegit.refreshSidebar");
       } catch (error: any) {
         vscode.window.showErrorMessage(
-          `easyGit: Stash failed — ${error.message}`
+          `OneGit: Stash failed — ${error.message}`,
         );
       }
     }),
 
-    vscode.commands.registerCommand("easygit.popStash", async () => {
+    vscode.commands.registerCommand("onegit.popStash", async () => {
       try {
         await git.popStash();
-        vscode.window.showInformationMessage("easyGit: Stash popped.");
-        vscode.commands.executeCommand("easygit.refreshSidebar");
+        vscode.window.showInformationMessage("OneGit: Stash popped.");
+        vscode.commands.executeCommand("onegit.refreshSidebar");
       } catch (error: any) {
         vscode.window.showErrorMessage(
-          `easyGit: Pop stash failed — ${error.message}`
+          `OneGit: Pop stash failed — ${error.message}`,
         );
       }
-    })
+    }),
   );
 }

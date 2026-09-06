@@ -3,7 +3,7 @@ import { git } from "../git/gitService";
 
 export function registerBranchCommands(context: vscode.ExtensionContext) {
   context.subscriptions.push(
-    vscode.commands.registerCommand("easygit.branchSwitch", async () => {
+    vscode.commands.registerCommand("onegit.branchSwitch", async () => {
       try {
         const branches = await git.getBranches();
         const items = branches.map((b) => ({
@@ -19,18 +19,18 @@ export function registerBranchCommands(context: vscode.ExtensionContext) {
         if (selected && !selected.description) {
           await git.switchBranch(selected.label);
           vscode.window.showInformationMessage(
-            `easyGit: Switched to branch "${selected.label}"`
+            `OneGit: Switched to branch "${selected.label}"`,
           );
-          vscode.commands.executeCommand("easygit.refreshSidebar");
+          vscode.commands.executeCommand("onegit.refreshSidebar");
         }
       } catch (error: any) {
         vscode.window.showErrorMessage(
-          `easyGit: Branch switch failed — ${error.message}`
+          `OneGit: Branch switch failed — ${error.message}`,
         );
       }
     }),
 
-    vscode.commands.registerCommand("easygit.createBranch", async () => {
+    vscode.commands.registerCommand("onegit.createBranch", async () => {
       const name = await vscode.window.showInputBox({
         prompt: "New branch name",
         placeHolder: "feature/my-new-branch",
@@ -45,14 +45,14 @@ export function registerBranchCommands(context: vscode.ExtensionContext) {
       try {
         await git.createBranch(name);
         vscode.window.showInformationMessage(
-          `easyGit: Created and switched to branch "${name}"`
+          `OneGit: Created and switched to branch "${name}"`,
         );
-        vscode.commands.executeCommand("easygit.refreshSidebar");
+        vscode.commands.executeCommand("onegit.refreshSidebar");
       } catch (error: any) {
         vscode.window.showErrorMessage(
-          `easyGit: Failed to create branch — ${error.message}`
+          `OneGit: Failed to create branch — ${error.message}`,
         );
       }
-    })
+    }),
   );
 }
