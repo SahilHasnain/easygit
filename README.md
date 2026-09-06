@@ -1,4 +1,4 @@
-# easyGit
+# OneGit
 
 A simplified Git workflow for VS Code — everything lives in one sidebar panel. No status bar clutter, no complex menus.
 
@@ -14,7 +14,7 @@ A simplified Git workflow for VS Code — everything lives in one sidebar panel.
 
 ## Usage
 
-Open any Git repository. The easyGit panel appears in the Activity Bar (source-control icon).
+Open any Git repository. The OneGit panel appears in the Activity Bar (source-control icon).
 
 ## Development
 

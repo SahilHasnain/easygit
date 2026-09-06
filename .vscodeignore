@@ -7,3 +7,7 @@ esbuild.config.mjs
 .gitignore
 **/*.ts
 **/*.map
+.opencode/**
+.code-review-graph/**
+*.vsix
+icon.png.original
